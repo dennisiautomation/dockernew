@@ -16,10 +16,10 @@ RUN npm install
 WORKDIR /app/frontend
 RUN npm install --legacy-peer-deps
 
-# Corrigir a URL da API no arquivo config.js
-RUN sed -i 's|http://localhost:5001/api|http://localhost:3000/api|g' src/config.js || echo "URL já configurada corretamente"
+# Configurar URL da API
+COPY frontend/src/config.js src/config.js
 
-# Construir o frontend
+# Build do frontend
 RUN npm run build --legacy-peer-deps
 
 # Voltar para o diretório do backend para iniciar a aplicação
@@ -33,5 +33,5 @@ ENV MONGODB_URI=mongodb://mongodb:27017/newcashft
 # Expor a porta
 EXPOSE 3000
 
-# Iniciar a aplicação
+# Comando para iniciar a aplicação
 CMD ["node", "server.js"]
