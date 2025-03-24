@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # MongoDB
+  mongodb:
+    image: mongo:latest
+    container_name: newcashft-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  # Aplicação completa - Backend servindo o Frontend
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: newcashft-app
+    restart: always
+    ports:
+      - "80:3000"
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/newcashft
+      - JWT_SECRET=seu_jwt_secret
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
