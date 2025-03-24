@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # MongoDB
+  # MongoDB - Container já configurado conforme uso atual
   mongodb:
     image: mongo:latest
     container_name: newcashft-mongodb
@@ -25,6 +25,10 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/newcashft
       - JWT_SECRET=seu_jwt_secret
       - NODE_ENV=production
+      # Garante que todas as contas (Principal, USD, EUR, USDT) sejam exibidas
+      # E que as contas FT (60248, 60249) permaneçam exclusivas do admin
+      - DISPLAY_ALL_ACCOUNTS=true
+      - ADMIN_EXCLUSIVE_FT_ACCOUNTS=true
     depends_on:
       - mongodb
 
