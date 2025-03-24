@@ -14,13 +14,13 @@ RUN npm install
 
 # Configurar frontend
 WORKDIR /app/frontend
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Corrigir a URL da API no arquivo config.js
 RUN sed -i 's|http://localhost:5001/api|http://localhost:3000/api|g' src/config.js || echo "URL já configurada corretamente"
 
 # Construir o frontend
-RUN npm run build
+RUN npm run build --legacy-peer-deps
 
 # Voltar para o diretório do backend para iniciar a aplicação
 WORKDIR /app/backend
