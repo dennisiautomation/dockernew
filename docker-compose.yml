@@ -6,8 +6,7 @@ services:
     build: .
     container_name: newcashft-app
     restart: always
-    ports:
-      - "3000:3000"
+    network_mode: "host"
     environment:
       - PORT=3000
       - MONGODB_URI=mongodb://localhost:27017/newcashft
@@ -15,4 +14,3 @@ services:
       - NODE_ENV=production
       - DISPLAY_ALL_ACCOUNTS=true
       - ADMIN_EXCLUSIVE_FT_ACCOUNTS=true
-    network_mode: "host"
