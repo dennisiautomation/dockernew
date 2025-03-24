@@ -3,17 +3,16 @@ version: '3.8'
 services:
   # Aplicação completa - Backend servindo o Frontend
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: newcashft-app
     restart: always
     ports:
-      - "80:3000"
+      - "3000:3000"
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://77.37.43.78:27017/newcashft
+      - MONGODB_URI=mongodb://localhost:27017/newcashft
       - JWT_SECRET=seu_jwt_secret
       - NODE_ENV=production
       - DISPLAY_ALL_ACCOUNTS=true
       - ADMIN_EXCLUSIVE_FT_ACCOUNTS=true
+    network_mode: "host"
