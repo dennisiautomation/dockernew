@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  # Aplicação completa - Backend servindo o Frontend
   app:
-    build: .
+    image: node:18-alpine
     container_name: newcashft-app
     restart: always
-    network_mode: "host"
+    ports:
+      - "3000:3000"
     environment:
       - PORT=3000
       - MONGODB_URI=mongodb://localhost:27017/newcashft
@@ -14,3 +14,15 @@ services:
       - NODE_ENV=production
       - DISPLAY_ALL_ACCOUNTS=true
       - ADMIN_EXCLUSIVE_FT_ACCOUNTS=true
+    command: >
+      sh -c "
+        apk add --no-cache git &&
+        git clone https://github.com/dennisiautomation/newcastft.git /app &&
+        cd /app/backend &&
+        npm install &&
+        cd /app/frontend &&
+        npm install --legacy-peer-deps &&
+        npm run build &&
+        cd /app/backend &&
+        node server.js
+      "
